@@ -1,6 +1,6 @@
 {
     "name": "erwane/cakephp-libs",
-    "description": "CakePHP 3.x libs",
+    "description": "Erwane CakePHP 3.x Libs (aka Ecl)",
     "type": "library",
     "authors": [
         {
@@ -15,5 +15,15 @@
     },
     "require-dev": {
         "phpunit/phpunit": "5.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ecl\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ecl\\Test\\": "tests"
+        }
     }
 }
