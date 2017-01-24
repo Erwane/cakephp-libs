@@ -15,4 +15,22 @@ class Text
     {
         return strlen(preg_replace('/[^0-9]/', '', $string));
     }
+
+    static public function urlsToLinks($text)
+    {
+        preg_match_all('`(http(s)?://([a-z0-9\._%&=/#-]+))`i', $text, $grep);
+        if (!empty($grep[1])) {
+            $patterns = array_map(function($v) {
+                return '/' . preg_quote($v, '/') . '/';
+            }, $grep[1]);
+
+            $replaces = array_map(function($v) {
+                return '<a href="' . $v . '">' . $v . '</a>';
+            }, $grep[1]);
+
+            return preg_replace($patterns, $replaces, $text);
+        }
+
+        return $text;
+    }
 }
