@@ -5,19 +5,23 @@ use Ecl\Utility\Text;
 
 class Password
 {
+    /**
+     * hash a password with CRYPT_SHA512
+     * @param  string $password plai password
+     * @return string encrypted password
+     */
     public function hash($password)
     {
         return crypt($password, '$6$' . $this->_salt() . '$');
-        return password_hash(
-            $password,
-            $this->_config['hashType'],
-            $this->_config['hashOptions']
-        );
     }
 
+    /**
+     * generate a 16 chars salt
+     * @return [type] [description]
+     */
     private function _salt()
     {
-        return substr(hash('sha1', password_hash(uniqid(), PASSWORD_DEFAULT)), mt_rand(0, 25), 16);
+        return substr(hash('sha256', uniqid()), mt_rand(0, 46), 16);
     }
 
     /**
