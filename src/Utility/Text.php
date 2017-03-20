@@ -18,7 +18,7 @@ class Text
 
     static public function urlsToLinks($text)
     {
-        preg_match_all('`(http(s)?://([a-z0-9\._%&=/#-]+))`i', $text, $grep);
+        preg_match_all('`(http(s)?://([a-z0-9\._%&=/#\?-]+))`i', $text, $grep);
         if (!empty($grep[1])) {
             $patterns = array_map(function($v) {
                 return '/' . preg_quote($v, '/') . '/';
