@@ -33,4 +33,15 @@ class Text
 
         return $text;
     }
+
+    /**
+    * Convert BR tags to nl
+    *
+    * @param string The string to convert
+    * @return string The converted string
+    */
+    public static function br2nl($string)
+    {
+        return preg_replace('/\<br(\s*)?\/?\>/i', "\n", $string);
+    }
 }
