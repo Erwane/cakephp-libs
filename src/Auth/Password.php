@@ -61,7 +61,7 @@ class Password
         $pass = 0;
         while ( !$check ) {
             $pass++;
-            $password = self::_password('medium', $length);
+            $password = self::_password($type, $length);
 
             $check = Text::countLowercases($password) >= 2 && Text::countCapitals($password) >= 2 && Text::countDigits($password) >= 2;
 
