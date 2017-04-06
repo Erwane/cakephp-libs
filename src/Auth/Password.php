@@ -10,16 +10,16 @@ class Password
      * @param  string $password plai password
      * @return string encrypted password
      */
-    public function hash($password)
+    public static function hash($password)
     {
-        return crypt($password, '$6$' . $this->_salt() . '$');
+        return crypt($password, '$6$' . self::_salt() . '$');
     }
 
     /**
      * generate a 16 chars salt
      * @return [type] [description]
      */
-    private function _salt()
+    protected static function _salt()
     {
         return substr(hash('sha256', uniqid()), mt_rand(0, 46), 16);
     }
