@@ -2,6 +2,10 @@
 namespace Ecl\Utility;
 
 use Cake\Database\Type;
+use Cake\I18n\Date as CakeDate;
+use Cake\I18n\FrozenDate;
+use Cake\I18n\Time;
+use Cake\I18n\FrozenTime;
 
 class Date
 {
@@ -32,6 +36,7 @@ class Date
      */
     public static function changeOutputDateFormat($newFormat = 'dd/MM/yyyy')
     {
+        CakeDate::setToStringFormat($newFormat);
         FrozenDate::setToStringFormat($newFormat);
     }
 
@@ -42,6 +47,7 @@ class Date
      */
     public static function changeOutputDateTimeFormat($newFormat = 'dd-MM-yyyy HH:mm')
     {
+        Time::setToStringFormat($newFormat);
         FrozenTime::setToStringFormat($newFormat);
     }
 }

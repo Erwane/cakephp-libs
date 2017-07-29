@@ -6,23 +6,6 @@ use Cake\Auth\AbstractPasswordHasher;
 class StrongPasswordHasher extends AbstractPasswordHasher
 {
     /**
-     * Default config for this object.
-     *
-     * ### Options
-     *
-     * - `hashType` - Hashing algo to use. Valid values are those supported by `$algo`
-     *   argument of `password_hash()`. Defaults to `PASSWORD_DEFAULT`
-     * - `hashOptions` - Associative array of options. Check the PHP manual for
-     *   supported options for each hash type. Defaults to empty array.
-     *
-     * @var array
-     */
-    protected $_defaultConfig = [
-        'hashType' => CRYPT_SHA512,
-        'hashOptions' => []
-    ];
-
-    /**
      * Generates password hash.
      *
      * @param string $password Plain text password to hash.
