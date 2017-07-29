@@ -1,5 +1,5 @@
 <?php
-namespace Ecl\Utility;
+namespace Ecl\I18n;
 
 use Cake\Database\Type;
 use Cake\I18n\Date as CakeDate;
@@ -7,8 +7,26 @@ use Cake\I18n\FrozenDate;
 use Cake\I18n\Time;
 use Cake\I18n\FrozenTime;
 
-class Date
+class IoDateTimeFormat
 {
+
+    public static function ioDateFormat($format)
+    {
+        self::changeInputDateFormat($format);
+        self::changeOutputDateFormat($format);
+    }
+
+    public static function ioDateTimeFormat($dateFormat, $timeFormat = null)
+    {
+        if ($timeFormat !== null) {
+            self::ioDateFormat($dateFormat);
+            $dateFormat = $dateFormat . ' ' . $timeFormat;
+        }
+
+        self::changeInputDateTimeFormat($dateFormat);
+        self::changeOutputDateTimeFormat($dateFormat);
+    }
+
     /**
      * [changeInputDateFormat description]
      * @param  string $newFormat [description]
