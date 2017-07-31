@@ -1,16 +1,21 @@
 <?php
 namespace Ecl\Utility;
 
+use Cake\Core\Configure;
+use Cake\Utility\Inflector;
+
 class Text
 {
     static public function countCapitals($string)
     {
         return strlen(preg_replace('/[^A-Z]/', '', $string));
     }
+
     static public function countLowercases($string)
     {
         return strlen(preg_replace('/[^a-z]/', '', $string));
     }
+
     static public function countDigits($string)
     {
         return strlen(preg_replace('/[^0-9]/', '', $string));
@@ -43,5 +48,52 @@ class Text
     public static function br2nl($string)
     {
         return preg_replace('/\<br(\s*)?\/?\>/i', "\n", $string);
+    }
+
+    /**
+     * slugify an url title correctly
+     * @param  string $title   text for url
+     * @param  array  $params options
+     *  - `stopWords`   if true, remove common short words
+     *  - `cut`         if not empty, cut the slug for `cut` value words
+     * @return string
+     */
+    public static function urlSlug($title, $params = []) {
+
+        $params = array_merge(['stopWords' => true, 'cut' => 0], $params);
+        extract($params);
+
+        // minus
+        $title = mb_convert_case($title, MB_CASE_LOWER, Configure::read('App.encoding'));
+        $title = Inflector::slug($title, ' ');
+
+        // recolle des mots
+        $title = preg_replace('`(\d+)\s(eme|er)\s`', '$1$2 ', $title);
+
+        if ($stopWords) {
+            // nettoyage des lettres seules
+            $search = array("`^[a-z]\s`", "`\s+[a-z]\s+`",);
+            $replace = array('', ' ',);
+            // remplace 2 fois
+            $title = preg_replace($search, $replace, preg_replace($search, $replace, $title));
+
+            // supprime les mots inutiles SI on a plus de 4 mots
+            if ($cut > 0 && str_word_count($title) > $cut) {
+                $bad = '(la|du|et|les?|des?|tes?|au|en|un|avec|dans|pour|sur|sous|par|ma|cet)';
+                $search = ['/^' . $bad . '\s/', '/\s' . $bad . '\s/'];
+                $replace = ['', ' '];
+                $title = preg_replace($search, $replace, preg_replace($search, $replace, $title));
+            }
+        }
+
+        // slugify
+        $title = Inflector::slug($title, '-');
+
+        if ($cut > 0) {
+            // keep 4 words only
+            $title = implode('-', array_slice(explode('-', $title), 0, $cut));
+        }
+
+        return $title;
     }
 }
