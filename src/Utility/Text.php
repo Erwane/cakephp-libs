@@ -79,7 +79,7 @@ class Text
 
             // supprime les mots inutiles SI on a plus de 4 mots
             if ($cut > 0 && str_word_count($title) > $cut) {
-                $bad = '(la|du|et|les?|des?|tes?|au|en|un|avec|dans|pour|sur|sous|par|ma|cet)';
+                $bad = '(la|du|et|les?|des?|tes?|au|en|un|avec|dans|pour|sur|sous|par|ma|cet|of|to)';
                 $search = ['/^' . $bad . '\s/', '/\s' . $bad . '\s/'];
                 $replace = ['', ' '];
                 $title = preg_replace($search, $replace, preg_replace($search, $replace, $title));
