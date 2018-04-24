@@ -11,12 +11,27 @@ class DateTimeFormat
     protected static $_locale = null;
 
     /**
+     * set date & time format in same method
+     * @param string $date ex 'dd BBB YYYY'
+     * @param string $time ex 'HH:mm'
+     */
+    public static function setDateTimeFormat($date, $time)
+    {
+        self::setDateFormat($date);
+        self::setTimeFormat($time);
+
+        IoDateTimeFormat::ioDateTimeFormat($date, $time);
+    }
+
+    /**
      * set Date Format
      * @param string $format Date Format
      */
     public static function setDateFormat($format)
     {
         self::$_date_format = $format;
+
+        IoDateTimeFormat::ioDateFormat($format);
     }
 
     /**
