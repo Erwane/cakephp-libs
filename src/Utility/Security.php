@@ -1,7 +1,9 @@
 <?php
 namespace Ecl\Utility;
 
-class Security
+use Cake\Utility\Security as CakeSecurity;
+
+class Security extends CakeSecurity
 {
     public function token(int $length = 8)
     {
