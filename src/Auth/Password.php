@@ -55,6 +55,45 @@ class Password
         return self::_passwordWithMinimals('medium', $length);
     }
 
+    public static function generate(array $options)
+    {
+        $options += [
+            'size' => 10,
+            'minimalLower' => 2,
+            'minimalUpper' => 2,
+            'minimalDigit' => 2,
+            'minimalSymbol' => 2,
+            'lowers' => 'abcdefghijkmnopqrstuvwxyz',
+            'uppers' => 'ABCDEFGHJKLMNPQRSTUVWXYZ',
+            'digits' => '1234567890',
+            'symbols' => '!*#+=:,-_?',
+        ];
+
+        $str = '';
+
+        foreach (['lower', 'upper', 'digit', 'symbol'] as $key) {
+            $minimal = $options['minimal' . ucfirst($key)];
+
+            if (!$minimal) {
+                continue;
+            }
+
+            $content = $options[$key . 's'];
+
+            for ($i=1; $i <= $minimal ; $i++) {
+                $str .= $content[random_int(0, strlen($content) - 1)];
+            }
+        }
+
+        // complete with lower
+        $lowers = $options['lowers'];
+        for ($i=strlen($str); $i <= $options['size'] ; $i++) {
+            $str .= $lowers[random_int(0, strlen($lowers) - 1)];
+        }
+
+        return str_shuffle($str);
+    }
+
     static public function _passwordWithMinimals($type = 'medium', $length = 10)
     {
         $check = false;
