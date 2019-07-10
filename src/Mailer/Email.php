@@ -4,6 +4,7 @@ namespace Ecl\Mailer;
 use Cake\I18n\I18n;
 use Cake\Mailer\Email as CakeEmail;
 use Cake\View\StringTemplateTrait;
+use InvalidArgumentException;
 use HTMLPurifier;
 use HTMLPurifier_Config;
 
@@ -35,6 +36,13 @@ class Email extends CakeEmail
         $this->set($this->_defaultVars);
     }
 
+    public function debug()
+    {
+        $rendered = $this->_renderTemplates([]);
+        echo $rendered['html'];
+        exit;
+    }
+
     /**
      * set allowed vars in this template
      * @param array $vars allowed vars keys
@@ -42,7 +50,29 @@ class Email extends CakeEmail
      */
     public function setAllowedVars(array $vars)
     {
-        $this->_allowedVars = array_map('strtoupper', $vars);
+        $vars = array_map('strtoupper', $vars);
+
+        $this->_allowedVars = array_merge($this->_allowedVars, $vars);
+
+        return $this;
+    }
+
+    /**
+     * set allowed var in this template
+     * @param string $name allowed var name
+     * @return self
+     */
+    public function setAllowedVar(string $name)
+    {
+        $name = strtoupper($name);
+
+        if (empty($name)) {
+            throw new InvalidArgumentException('var name is empty');
+        }
+
+        if (array_search($name, $this->_allowedVars) === false) {
+            array_push($this->_allowedVars, $name);
+        }
 
         return $this;
     }
@@ -170,6 +200,19 @@ class Email extends CakeEmail
     {
         $this->_rawContent['html'] = $content;
         $this->setEmailFormat('both');
+
+        return $this;
+    }
+
+    /**
+     * set text body of email instead of using template
+     * @param string $content text email content
+     * @return self
+     */
+    public function setTextBody($content)
+    {
+        $this->_rawContent['text'] = $content;
+        $this->setEmailFormat('text');
 
         return $this;
     }
