@@ -36,6 +36,10 @@ class Email extends CakeEmail
         $this->set($this->_defaultVars);
     }
 
+    /**
+     * print html element to page and exit
+     * @return void
+     */
     public function debug()
     {
         $rendered = $this->_renderTemplates([]);
@@ -86,43 +90,6 @@ class Email extends CakeEmail
 
         return parent::setSubject($subject);
     }
-
-    /**
-     * {@inheritDoc}
-    protected function _render($content)
-    {
-        $message = parent::_render($content);
-
-        $content = implode("\n", $content);
-        $this->setTemplates(['body' => $content]);
-
-        // implode for var replacement
-        $content = implode('|__|__|__|', $message);
-
-        $this->_populateVars();
-
-        $patterns = $replaces = [];
-
-        preg_match_all('/\{([A-Za-z0-9_]+)\}/', $content, $grep);
-        if (!empty($grep[1])) {
-            foreach ($grep[1] as $key) {
-                if (array_key_exists($key, $this->_vars)) {
-                    $patterns[] = '/' . preg_quote('{' . $key . '}') . '/';
-                    $replaces[] = $this->_vars[$key];
-                }
-            }
-        }
-
-        $content = preg_replace($patterns, $replaces, $content);
-
-        debug($patterns);
-
-        debug($content);
-        exit;
-
-        return explode('|__|__|__|', $content);
-    }
-     */
 
     /**
      * {@inheritDoc}
