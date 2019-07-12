@@ -5,7 +5,7 @@ use Cake\Utility\Security as CakeSecurity;
 
 class Security extends CakeSecurity
 {
-    public function token(int $length = 8)
+    public static function token(int $length = 8)
     {
         $random = base64_encode(parent::randomBytes($length * 4));
         $clean = preg_replace('/[^A-Za-z0-9]/', '', $random);
