@@ -40,6 +40,15 @@ class Email extends CakeEmail
      * print html element to page and exit
      * @return void
      */
+    public function render()
+    {
+        return $this->_renderTemplates([]);
+    }
+
+    /**
+     * print html element to page and exit
+     * @return void
+     */
     public function debug()
     {
         $rendered = $this->_renderTemplates([]);
