@@ -16,8 +16,7 @@
     "require": {
         "php": ">=7",
         "cakephp/cakephp": "^3.5",
-        "ezyang/htmlpurifier": "^4.10",
-        "wyrihaximus/html-compress": "^1.4"
+        "ezyang/htmlpurifier": "^4.10"
     },
     "require-dev": {
         "phpunit/phpunit": "^7.5"
