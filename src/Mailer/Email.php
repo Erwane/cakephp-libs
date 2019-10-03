@@ -52,7 +52,13 @@ class Email extends CakeEmail
     public function debug()
     {
         $rendered = $this->_renderTemplates([]);
-        echo $rendered['html'];
+        if (isset($rendered['html'])) {
+            echo $rendered['html'];
+        }
+
+        if (isset($rendered['text'])) {
+            echo '<pre>' . $rendered['text'] . '</pre>';
+        }
         exit;
     }
 
