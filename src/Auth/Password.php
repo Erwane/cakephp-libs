@@ -85,6 +85,10 @@ class Password
             }
         }
 
+        if (strlen($str) >= $options['size']) {
+            return $str;
+        }
+
         // complete with lower
         $lowers = $options['lowers'];
         for ($i=strlen($str); $i <= $options['size'] ; $i++) {
