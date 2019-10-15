@@ -2,9 +2,9 @@
 namespace Ecl\Utility;
 
 use Cake\Core\Configure;
-use Cake\Utility\Inflector;
+use Cake\Utility\Text as CakeText;
 
-class Text
+class Text extends CakeText
 {
     static public function countCapitals($string)
     {
@@ -65,7 +65,7 @@ class Text
 
         // minus
         $title = mb_convert_case($title, MB_CASE_LOWER, Configure::read('App.encoding'));
-        $title = Inflector::slug($title, ' ');
+        $title = parent::slug($title, ' ');
 
         // recolle des mots
         $title = preg_replace('`(\d+)\s(eme|er)\s`', '$1$2 ', $title);
@@ -87,7 +87,7 @@ class Text
         }
 
         // slugify
-        $title = Inflector::slug($title, '-');
+        $title = parent::slug($title, '-');
 
         if ($cut > 0) {
             // keep 4 words only
