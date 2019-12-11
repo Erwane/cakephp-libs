@@ -48,14 +48,12 @@ class CacheKey
 
         $backend = static::pool($config);
 
-        $cache = $backend->get($cacheName, []);
+        $cache = (array)$backend->get($cacheName, []);
 
-        if (!isset($cache[$key])) {
-            $cache[$key] = [
-                'expire' => time() + $ttl,
-                'value' => $value,
-            ];
-        }
+        $cache[$key] = [
+            'expire' => time() + $ttl,
+            'value' => $value,
+        ];
 
         $cache = static::_cleanup($cache);
 
