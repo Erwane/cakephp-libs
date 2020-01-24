@@ -75,6 +75,11 @@ class CacheKey
         $content = $backend->get($cacheName, null);
 
         if (isset($content[$key])) {
+            // key expired ?
+            if ($content[$key]['expire'] < time()) {
+                return null;
+            }
+
             return $content[$key]['value'];
         }
 
