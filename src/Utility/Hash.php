@@ -15,6 +15,7 @@ class Hash
             $partition[$px] = array_slice( $array, $mark, $incr );
             $mark += $incr;
         }
+
         return $partition;
     }
 }
