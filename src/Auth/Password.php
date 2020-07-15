@@ -91,7 +91,7 @@ class Password
 
         // complete with lower
         $lowers = $options['lowers'];
-        for ($i=strlen($str); $i <= $options['size'] ; $i++) {
+        for ($i=strlen($str); $i < $options['size'] ; $i++) {
             $str .= $lowers[random_int(0, strlen($lowers) - 1)];
         }
 
@@ -135,7 +135,7 @@ class Password
         $code = '';
         while (strlen($code) < $length) {
             $char = mt_rand(0, strlen($string) - 1);
-            $code .= $string{$char};
+            $code .= $string[$char];
         }
         return $code;
     }
