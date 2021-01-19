@@ -1,18 +1,29 @@
 <?php
+declare(strict_types=1);
 namespace Ecl\Utility;
 
+/**
+ * Class Hash
+ *
+ * @package Ecl\Utility
+ */
 class Hash
 {
-    public static function partition($array, $part)
+    /**
+     * @param array $array Input
+     * @param int $part Wanted partitions
+     * @return array
+     */
+    public static function partition($array, $part): array
     {
-        $listlen = count( $array );
-        $partlen = floor( $listlen / $part );
+        $listlen = count($array);
+        $partlen = floor($listlen / $part);
         $partrem = $listlen % $part;
-        $partition = array();
+        $partition = [];
         $mark = 0;
         for ($px = 0; $px < $part; $px++) {
             $incr = ($px < $partrem) ? $partlen + 1 : $partlen;
-            $partition[$px] = array_slice( $array, $mark, $incr );
+            $partition[$px] = array_slice($array, $mark, $incr);
             $mark += $incr;
         }
 

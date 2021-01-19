@@ -1,12 +1,19 @@
 <?php
+declare(strict_types=1);
 namespace Ecl\Auth;
 
 use Ecl\Utility\Text;
 
+/**
+ * Class Password
+ *
+ * @package Ecl\Auth
+ */
 class Password
 {
     /**
      * hash a password with CRYPT_SHA512
+     *
      * @param  string $password plai password
      * @return string encrypted password
      */
@@ -17,45 +24,67 @@ class Password
 
     /**
      * generate a 16 chars salt
-     * @return [type] [description]
+     *
+     * @return string
      */
-    protected static function _salt()
+    protected static function _salt(): string
     {
         return substr(hash('sha256', uniqid()), mt_rand(0, 46), 16);
     }
 
     /**
-     * robust but easy to write password
+     * Robust but easy to write password
+     *
+     * @return string
      */
-    static public function easyPassword()
+    public static function easyPassword(): string
     {
         $chars = [
-            0 => "23456789",
-            'a' => "abcdefghijkmnopqrstuvwxyz",
-            'A' => "ABCDEFGHJKLMNPQRSTUVWXYZ",
+            0 => '23456789',
+            'a' => 'abcdefghijkmnopqrstuvwxyz',
+            'A' => 'ABCDEFGHJKLMNPQRSTUVWXYZ',
         ];
 
         $password = ['a' => '', 'A' => '', 0 => ''];
-        for ($i = 1; $i <= 4;$i++) {
-            $password['a'] .= $chars['a'][mt_rand(0,strlen($chars['a']) -1)];
-            $password['A'] .= $chars['A'][mt_rand(0,strlen($chars['A']) -1)];
-            $password[0] .= $chars[0][mt_rand(0,strlen($chars[0]) -1)];
+        for ($i = 1; $i <= 4; $i++) {
+            $password['a'] .= $chars['a'][mt_rand(0, strlen($chars['a']) - 1)];
+            $password['A'] .= $chars['A'][mt_rand(0, strlen($chars['A']) - 1)];
+            $password[0] .= $chars[0][mt_rand(0, strlen($chars[0]) - 1)];
         }
 
         return $password['a'] . $password['A'] . $password[0];
     }
 
-    static public function simplePassword($length = 16)
+    /**
+     * Generate simple password
+     *
+     * @param  int $length Password length
+     * @return string
+     */
+    public static function simplePassword($length = 16): string
     {
-        return self::_password('simple', $length);
+        return self::password('simple', $length);
     }
 
-    static public function mediumPassword($length = 10)
+    /**
+     * Generate medium password
+     *
+     * @param  int $length Password length
+     * @return string
+     */
+    public static function mediumPassword($length = 10): string
     {
-        return self::_passwordWithMinimals('medium', $length);
+        return self::passwordWithMinimals('medium', $length);
     }
 
-    public static function generate(array $options)
+    /**
+     * Generate password
+     *
+     * @param  array $options Password options
+     * @return string
+     * @throws \Exception
+     */
+    public static function generate(array $options): string
     {
         $options += [
             'size' => 10,
@@ -80,7 +109,7 @@ class Password
 
             $content = $options[$key . 's'];
 
-            for ($i=1; $i <= $minimal ; $i++) {
+            for ($i = 1; $i <= $minimal; $i++) {
                 $str .= $content[random_int(0, strlen($content) - 1)];
             }
         }
@@ -91,31 +120,47 @@ class Password
 
         // complete with lower
         $lowers = $options['lowers'];
-        for ($i=strlen($str); $i < $options['size'] ; $i++) {
+        for ($i = strlen($str); $i < $options['size']; $i++) {
             $str .= $lowers[random_int(0, strlen($lowers) - 1)];
         }
 
         return str_shuffle($str);
     }
 
-    static public function _passwordWithMinimals($type = 'medium', $length = 10)
+    /**
+     * Generate password with minimals chars
+     *
+     * @param  string $type Password type
+     * @param  int $length Length
+     * @return string
+     */
+    public static function passwordWithMinimals($type = 'medium', $length = 10): string
     {
         $check = false;
         $pass = 0;
-        while ( !$check ) {
+        $password = '';
+        while (!$check) {
             $pass++;
-            $password = self::_password($type, $length);
+            $password = self::password($type, $length);
 
             $check = Text::countLowercases($password) >= 2 && Text::countCapitals($password) >= 2 && Text::countDigits($password) >= 2;
 
-            if ($pass >= 10)
-                $check=true;
+            if ($pass >= 10) {
+                $check = true;
+            }
         }
 
         return $password;
     }
 
-    static public function _password($type = 'medium', $length = 10)
+    /**
+     * Generate password for type (simple, medium, high)
+     *
+     * @param  string $type Password type
+     * @param  int $length Password length
+     * @return string
+     */
+    public static function password($type = 'medium', $length = 10): string
     {
         $chars = [
             'min' => 'abcdefghijkmnopqrstuvwxyz',
@@ -126,17 +171,21 @@ class Password
 
         if ($type == 'simple') {
             $string = $chars['min'] . $chars['maj'];
-        } else if ($type == 'medium') {
+        } elseif ($type == 'medium') {
             $string = $chars['min'] . $chars['maj'] . $chars['digit'];
-        } else if ($type == 'high') {
+        } else {
             $string = $chars['min'] . $chars['maj'] . $chars['digit'] . $chars['symbol'];
         }
 
         $code = '';
-        while (strlen($code) < $length) {
+        $codeLength = 0;
+        while ($codeLength < $length) {
             $char = mt_rand(0, strlen($string) - 1);
             $code .= $string[$char];
+
+            $codeLength++;
         }
+
         return $code;
     }
 }

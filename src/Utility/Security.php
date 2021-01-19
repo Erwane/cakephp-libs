@@ -1,11 +1,24 @@
 <?php
+declare(strict_types=1);
 namespace Ecl\Utility;
 
 use Cake\Utility\Security as CakeSecurity;
 
+/**
+ * Class Security
+ *
+ * @package Ecl\Utility
+ */
 class Security extends CakeSecurity
 {
-    public static function token(int $length = 8)
+    /**
+     * Generate token
+     *
+     * @param  int $length Token length
+     * @return string
+     * @throws \Exception
+     */
+    public static function token(int $length = 8): string
     {
         $random = base64_encode(parent::randomBytes($length * 4));
         $clean = preg_replace('/[^A-Za-z0-9]/', '', $random);
@@ -15,6 +28,7 @@ class Security extends CakeSecurity
 
     /**
      * short hash of input
+     *
      * @param  mixed $input input
      * @return string
      */
@@ -30,6 +44,7 @@ class Security extends CakeSecurity
     /**
      * unique alphanumerique hash
      * /!\ VERY SLOW /!\
+     *
      * @param  string|array $input inpu
      * @return string 16 chars
      */

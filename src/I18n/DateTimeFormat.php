@@ -1,21 +1,29 @@
 <?php
+declare(strict_types=1);
 namespace Ecl\I18n;
 
-use Cake\Chronos\ChronosInterface;
+use Cake\I18n\DateFormatTrait;
 
+/**
+ * Class DateTimeFormat
+ *
+ * @package Ecl\I18n
+ */
 class DateTimeFormat
 {
-    protected static $_date_format = null;
-    protected static $_time_format = null;
+    protected static $_dateFormat = null;
+    protected static $_timeFormat = null;
     protected static $_timezone = null;
     protected static $_locale = null;
 
     /**
      * set date & time format in same method
-     * @param string $date ex 'dd BBB YYYY'
-     * @param string $time ex 'HH:mm'
+     *
+     * @param  string $date ex 'dd BBB YYYY'
+     * @param  string $time ex 'HH:mm'
+     * @return void
      */
-    public static function setDateTimeFormat($date, $time)
+    public static function setDateTimeFormat(string $date, string $time): void
     {
         self::setDateFormat($date);
         self::setTimeFormat($time);
@@ -25,58 +33,67 @@ class DateTimeFormat
 
     /**
      * set Date Format
-     * @param string $format Date Format
+     *
+     * @param  string $format Date Format
+     * @return void
      */
-    public static function setDateFormat($format)
+    public static function setDateFormat(string $format): void
     {
-        self::$_date_format = $format;
+        self::$_dateFormat = $format;
 
         IoDateTimeFormat::ioDateFormat($format);
     }
 
     /**
      * set Time Format
-     * @param string $format Time Format
+     *
+     * @param  string $format Time Format
+     * @return void
      */
-    public static function setTimeFormat($format)
+    public static function setTimeFormat($format): void
     {
-        self::$_time_format = $format;
+        self::$_timeFormat = $format;
     }
 
     /**
      * set timezone
-     * @param string $timezone Timezone
+     *
+     * @param  string $timezone Timezone
+     * @return void
      */
-    public static function setTimezone($timezone)
+    public static function setTimezone($timezone): void
     {
         self::$_timezone = $timezone;
     }
 
     /**
      * set locale
-     * @param string $locale Locale
+     *
+     * @param  string $locale Locale
+     * @return void
      */
-    public static function setLocale($locale)
+    public static function setLocale($locale): void
     {
         self::$_locale = $locale;
     }
 
     /**
      * format date with app default format/timezone/locale
-     * @param  ChronosInterface $date   Date object
-     * @param  null|string $format      output format
-     * @param  null|string $timezone    timezone
-     * @param  null|string $locale      locale
-     * @return date                     formated date
+     *
+     * @param  \Cake\I18n\DateFormatTrait $date Date object
+     * @param  null|string $format output format
+     * @param  null|string $timezone timezone
+     * @param  null|string $locale locale
+     * @return string                     formated date
      */
-    public static function date(ChronosInterface $date, $format = null, $timezone = null, $locale = null)
+    public static function date(DateFormatTrait $date, $format = null, $timezone = null, $locale = null): string
     {
         if (empty($date)) {
             return '';
         }
 
         if ($format === null) {
-            $format = self::$_date_format;
+            $format = self::$_dateFormat;
         }
 
         if ($timezone === null) {
@@ -92,20 +109,21 @@ class DateTimeFormat
 
     /**
      * format time with app default format/timezone/locale
-     * @param  ChronosInterface $time   Date object
-     * @param  null|string $format      output format
-     * @param  null|string $timezone    timezone
-     * @param  null|string $locale      locale
-     * @return time                     formated time
+     *
+     * @param  \Cake\I18n\DateFormatTrait $time Date object
+     * @param  null|string $format output format
+     * @param  null|string $timezone timezone
+     * @param  null|string $locale locale
+     * @return string                     formated time
      */
-    public static function time(ChronosInterface $time, $format = null, $timezone = null, $locale = null)
+    public static function time(DateFormatTrait $time, $format = null, $timezone = null, $locale = null): string
     {
         if (empty($time)) {
             return '';
         }
 
         if ($format === null) {
-            $format = self::$_date_format . ' ' . self::$_time_format;
+            $format = self::$_dateFormat . ' ' . self::$_timeFormat;
         }
 
         if ($timezone === null) {

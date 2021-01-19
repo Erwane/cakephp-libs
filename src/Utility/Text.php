@@ -1,35 +1,65 @@
 <?php
+declare(strict_types=1);
 namespace Ecl\Utility;
 
 use Cake\Core\Configure;
 use Cake\Utility\Text as CakeText;
 
+/**
+ * Class Text
+ *
+ * @package Ecl\Utility
+ */
 class Text extends CakeText
 {
-    static public function countCapitals($string)
+    /**
+     * Count capitals
+     *
+     * @param string $string Input
+     * @return int
+     */
+    public static function countCapitals($string): int
     {
         return strlen(preg_replace('/[^A-Z]/', '', $string));
     }
 
-    static public function countLowercases($string)
+    /**
+     * Count lowers
+     *
+     * @param string $string Input
+     * @return int
+     */
+    public static function countLowercases($string): int
     {
         return strlen(preg_replace('/[^a-z]/', '', $string));
     }
 
-    static public function countDigits($string)
+    /**
+     * Count digits
+     *
+     * @param string $string Input
+     * @return int
+     */
+    public static function countDigits($string): int
     {
         return strlen(preg_replace('/[^0-9]/', '', $string));
     }
 
-    static public function urlsToLinks($text)
+    /**
+     * Transform urls to links
+     *
+     * @param string $text Input
+     * @return string
+     */
+    public static function urlsToLinks($text): string
     {
         preg_match_all('`(http(s)?://([a-z0-9\._%&=/#\?-]+))`i', $text, $grep);
         if (!empty($grep[1])) {
-            $patterns = array_map(function($v) {
+            $patterns = array_map(function ($v) {
                 return '/' . preg_quote($v, '/') . '/';
             }, $grep[1]);
 
-            $replaces = array_map(function($v) {
+            $replaces = array_map(function ($v) {
                 return '<a href="' . $v . '">' . $v . '</a>';
             }, $grep[1]);
 
@@ -40,27 +70,33 @@ class Text extends CakeText
     }
 
     /**
-    * Convert BR tags to nl
-    *
-    * @param string The string to convert
-    * @return string The converted string
-    */
-    public static function br2nl($string)
+     * Convert BR tags to nl
+     *
+     * @param  string $string The string to convert
+     * @return string The converted string
+     */
+    public static function br2nl($string): string
     {
         return preg_replace('/\<br(\s*)?\/?\>/i', "\n", $string);
     }
 
     /**
      * slugify an url title correctly
-     * @param  string $title   text for url
-     * @param  array  $params options
+     *
+     * @param  string $title text for url
+     * @param  array $params options
      *  - `stopWords`   if true, remove common short words
      *  - `cut`         if not empty, cut the slug for `cut` value words
      * @return string
      */
-    public static function urlSlug($title, $params = []) {
-
+    public static function urlSlug($title, $params = []): string
+    {
         $params = array_merge(['stopWords' => true, 'cut' => 0], $params);
+
+        /**
+         * @var bool $stopWords
+         * @var int $cut
+         */
         extract($params);
 
         // minus
@@ -72,8 +108,8 @@ class Text extends CakeText
 
         if ($stopWords) {
             // nettoyage des lettres seules
-            $search = array("`^[a-z]\s`", "`\s+[a-z]\s+`",);
-            $replace = array('', ' ',);
+            $search = ['`^[a-z]\s`', '`\s+[a-z]\s+`', ];
+            $replace = ['', ' ', ];
             // remplace 2 fois
             $title = preg_replace($search, $replace, preg_replace($search, $replace, $title));
 

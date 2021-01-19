@@ -1,12 +1,15 @@
 <?php
+declare(strict_types=1);
 namespace Ecl\Cache;
 
-use Cake\Cache\Engine\NullEngine;
 use Cake\Cache\Cache;
-use Cake\Cache\CacheRegistry;
-use Cake\Cache\SimpleCacheEngine;
 use Cake\Core\StaticConfigTrait;
 
+/**
+ * Class CacheKey
+ *
+ * @package Ecl\Cache
+ */
 class CacheKey
 {
     use StaticConfigTrait;
@@ -14,7 +17,7 @@ class CacheKey
     /**
      * Get a SimpleCacheEngine object for the named cache pool.
      *
-     * @param string $config The name of the configured cache backend.
+     * @param  string $config The name of the configured cache backend.
      * @return \Cake\Cache\SimpleCacheEngine
      */
     public static function pool($config)
@@ -26,11 +29,12 @@ class CacheKey
      * Write a key in the cache
      *
      * @param  string $cacheName Cache file name
-     * @param  string $key       Key in the cache
-     * @param  mixed  $value     Value
-     * @param  int    $ttl       Ttl for this key
-     * @param  string $config    Cache config
+     * @param  string $key Key in the cache
+     * @param  mixed $value Value
+     * @param  int $ttl Ttl for this key
+     * @param  string $config Cache config
      * @return bool
+     * @throws \Exception
      */
     public static function write(string $cacheName, string $key, $value, $ttl = 0, string $config = 'default')
     {
@@ -64,15 +68,15 @@ class CacheKey
      * Read a key from the cache
      *
      * @param  string $cacheName Cache file name
-     * @param  string $key       Key in the cache
-     * @param  string $config    Cache config
+     * @param  string $key Key in the cache
+     * @param  string $config Cache config
      * @return bool
      */
     public static function read($cacheName, $key, $config = 'default')
     {
         $backend = static::pool($config);
 
-        $content = $backend->get($cacheName, null);
+        $content = $backend->get($cacheName);
 
         if (isset($content[$key])) {
             // key expired ?
@@ -89,8 +93,10 @@ class CacheKey
     /**
      * Cleanup cache, only 2 times on 3 to avoid to much parse
      *
-     * @param  array  $cache Input cache
+     * @param  array $cache Input cache
      * @return array  Same or Cleaned cache
+     * @throws \Exception
+     * @throws \Exception
      */
     private static function _cleanup(array $cache)
     {

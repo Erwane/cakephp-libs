@@ -1,13 +1,20 @@
 <?php
+declare(strict_types=1);
 namespace Ecl\Mailer;
 
-use Cake\I18n\I18n;
+use Cake\I18n\FrozenDate;
+use Cake\I18n\FrozenTime;
 use Cake\Mailer\Email as CakeEmail;
 use Cake\View\StringTemplateTrait;
-use InvalidArgumentException;
 use HTMLPurifier;
 use HTMLPurifier_Config;
+use InvalidArgumentException;
 
+/**
+ * Class Email
+ *
+ * @package Ecl\Mailer
+ */
 class Email extends CakeEmail
 {
     use StringTemplateTrait;
@@ -38,20 +45,22 @@ class Email extends CakeEmail
 
     /**
      * print html element to page and exit
-     * @return void
+     *
+     * @return array
      */
     public function render()
     {
-        return $this->_renderTemplates([]);
+        return $this->_renderTemplates('');
     }
 
     /**
      * print html element to page and exit
+     *
      * @return void
      */
     public function debug()
     {
-        $rendered = $this->_renderTemplates([]);
+        $rendered = $this->_renderTemplates('');
         if (isset($rendered['html'])) {
             echo $rendered['html'];
         }
@@ -64,7 +73,8 @@ class Email extends CakeEmail
 
     /**
      * set allowed vars in this template
-     * @param array $vars allowed vars keys
+     *
+     * @param  array $vars allowed vars keys
      * @return self
      */
     public function setAllowedVars(array $vars)
@@ -78,7 +88,8 @@ class Email extends CakeEmail
 
     /**
      * set allowed var in this template
-     * @param string $name allowed var name
+     *
+     * @param  string $name allowed var name
      * @return self
      */
     public function setAllowedVar(string $name)
@@ -107,7 +118,7 @@ class Email extends CakeEmail
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected function _renderTemplates($content)
     {
@@ -133,8 +144,8 @@ class Email extends CakeEmail
 
         $View = $this->createView();
 
-        list($templatePlugin) = pluginSplit($View->getTemplate());
-        list($layoutPlugin) = pluginSplit($View->getLayout());
+        [$templatePlugin] = pluginSplit($View->getTemplate());
+        [$layoutPlugin] = pluginSplit($View->getLayout());
         if ($templatePlugin) {
             $View->setPlugin($templatePlugin);
         } elseif ($layoutPlugin) {
@@ -166,6 +177,7 @@ class Email extends CakeEmail
 
     /**
      * check if content is set from mailer instead of template
+     *
      * @return bool
      */
     public function hasCustomContent()
@@ -175,7 +187,8 @@ class Email extends CakeEmail
 
     /**
      * set html body of email instead of using template
-     * @param string $content html email content
+     *
+     * @param  string $content html email content
      * @return self
      */
     public function setHtmlBody($content)
@@ -188,7 +201,8 @@ class Email extends CakeEmail
 
     /**
      * set text body of email instead of using template
-     * @param string $content text email content
+     *
+     * @param  string $content text email content
      * @return self
      */
     public function setTextBody($content)
@@ -201,6 +215,7 @@ class Email extends CakeEmail
 
     /**
      * create a simple text part with html
+     *
      * @param  array $rendered rendered message
      * @return array
      */
@@ -233,6 +248,12 @@ class Email extends CakeEmail
         return $rendered;
     }
 
+    /**
+     * Format content
+     *
+     * @param  array $rendered Rendered content
+     * @return array
+     */
     public function format(array $rendered)
     {
         $this->setTemplates($rendered);
@@ -250,6 +271,7 @@ class Email extends CakeEmail
     /**
      * populate $_vars array with var/value
      * can call a special method based on templateName
+     *
      * @return void
      */
     private function _populateVars()
@@ -271,6 +293,7 @@ class Email extends CakeEmail
                 continue;
             }
 
+            $ary = [];
             if (is_object($var)) {
                 if (method_exists($var, 'toArray')) {
                     $ary = $var->toArray();
@@ -300,12 +323,13 @@ class Email extends CakeEmail
 
     /**
      * get value. Specially made for date object, but usable for other things
-     * @param mixed $value can be CakeTimeObject or int or string ...
+     *
+     * @param  mixed $value can be CakeTimeObject or int or string ...
      * @return mixed formated value
      */
     private function _varValue($value)
     {
-        if ($value instanceof \Cake\Chronos\ChronosInterface) {
+        if ($value instanceof FrozenDate || $value instanceof FrozenTime) {
             // Cake date/time timezone
             //$value->setTimezone($this->_timezone);
 
@@ -323,7 +347,8 @@ class Email extends CakeEmail
 
     /**
      * check if string is date/time
-     * @param string $str to check
+     *
+     * @param  string $str to check
      * @return bool
      */
     private function _isDateTime($str)

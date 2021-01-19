@@ -1,0 +1,9 @@
+grumphp:
+  ascii:
+    failed: ~
+    succeeded: ~
+  tasks:
+    phplint: ~
+    phpcs:
+      whitelist_patterns:
+        - /^src\/(.*\.php)/
