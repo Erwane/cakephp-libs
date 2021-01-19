@@ -1,6 +1,6 @@
 {
     "name": "erwane/cakephp-libs",
-    "description": "Erwane CakePHP 3.x Libs",
+    "description": "Erwane CakePHP Libs",
     "type": "cakephp-plugin",
     "authors": [
         {
