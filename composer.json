@@ -1,6 +1,6 @@
 {
     "name": "erwane/cakephp-libs",
-    "description": "Erwane CakePHP 3.x Libs (aka Ecl)",
+    "description": "Erwane CakePHP 3.x Libs",
     "type": "cakephp-plugin",
     "authors": [
         {
@@ -14,21 +14,23 @@
     },
     "minimum-stability": "stable",
     "require": {
-        "php": ">=7",
-        "cakephp/cakephp": "^3.7 || ^4.0",
+        "php": "^7.2",
+        "cakephp/cakephp": "^3.7",
         "ezyang/htmlpurifier": "^4.10"
     },
     "require-dev": {
-        "phpunit/phpunit": "^7.5"
+        "phpunit/phpunit": "^6.5",
+        "cakephp/cakephp-codesniffer" : "^3.0",
+        "php-parallel-lint/php-parallel-lint": "^1.2",
+        "phpro/grumphp": "^1.3"
     },
     "autoload": {
         "psr-4": {
             "Ecl\\": "src"
         }
     },
-    "autoload-dev": {
-        "psr-4": {
-            "Ecl\\Test\\": "tests"
-        }
+    "scripts": {
+        "cscheck": "vendor/bin/phpcs -p src/",
+        "csfix": "vendor/bin/phpcbf src/"
     }
 }
