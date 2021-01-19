@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 namespace Ecl\View\Helper;
 
 use Cake\I18n\DateFormatTrait;

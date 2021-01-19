@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 namespace Ecl\Utility;
 
 /**
@@ -22,7 +23,7 @@ class Hash
         $partition = [];
         $mark = 0;
         for ($px = 0; $px < $part; $px++) {
-            $incr = ($px < $partrem) ? $partlen + 1 : $partlen;
+            $incr = $px < $partrem ? $partlen + 1 : $partlen;
             $partition[$px] = array_slice($array, $mark, $incr);
             $mark += $incr;
         }

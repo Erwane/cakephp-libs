@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 namespace Ecl\Mailer;
 
 use Cake\I18n\FrozenDate;
@@ -34,7 +35,7 @@ class Email extends CakeEmail
     protected $_rawContent = ['html' => null, 'text' => null];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function __construct($config = null)
     {
@@ -46,11 +47,13 @@ class Email extends CakeEmail
     /**
      * print html element to page and exit
      *
-     * @return array
+     * @param  string|null $content Email content
+     * @return void
+     * @noinspection PhpMissingParentCallCommonInspection
      */
-    public function render()
+    public function render($content = null): void
     {
-        return $this->_renderTemplates('');
+        $this->message->setBody($this->_renderTemplates(''));
     }
 
     /**
@@ -108,7 +111,7 @@ class Email extends CakeEmail
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function setSubject($subject)
     {
@@ -118,9 +121,12 @@ class Email extends CakeEmail
     }
 
     /**
-     * @inheritDoc
+     * Render templates
+     *
+     * @param string $content Content
+     * @return array
      */
-    protected function _renderTemplates($content)
+    protected function _renderTemplates($content): array
     {
         $types = $this->_getTypes();
         $rendered = [];

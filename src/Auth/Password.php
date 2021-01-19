@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 namespace Ecl\Auth;
 
 use Ecl\Utility\Text;
@@ -143,7 +144,9 @@ class Password
             $pass++;
             $password = self::password($type, $length);
 
-            $check = Text::countLowercases($password) >= 2 && Text::countCapitals($password) >= 2 && Text::countDigits($password) >= 2;
+            $check = Text::countLowercases($password) >= 2
+                && Text::countCapitals($password) >= 2
+                && Text::countDigits($password) >= 2;
 
             if ($pass >= 10) {
                 $check = true;

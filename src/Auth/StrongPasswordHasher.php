@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 namespace Ecl\Auth;
 
 use Cake\Auth\AbstractPasswordHasher;
@@ -30,7 +31,7 @@ class StrongPasswordHasher extends AbstractPasswordHasher
      * @param  string $hashedPassword Existing hashed password.
      * @return bool True if hashes match else false.
      */
-    public function check($password, $hashedPassword)
+    public function check(string $password, string $hashedPassword): bool
     {
         return password_verify($password, $hashedPassword);
     }

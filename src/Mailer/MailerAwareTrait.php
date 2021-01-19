@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 namespace Ecl\Mailer;
 
 use Cake\Core\App;
@@ -19,7 +20,7 @@ trait MailerAwareTrait
      * @param  \Ecl\Mailer\Email|null $email specifique email object
      * @return \Cake\Mailer\Mailer
      */
-    protected function getMailer($name, Email $email = null)
+    protected function getMailer($name, ?Email $email = null)
     {
         if ($email === null) {
             $email = new Email();

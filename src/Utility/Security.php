@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 namespace Ecl\Utility;
 
 use Cake\Utility\Security as CakeSecurity;

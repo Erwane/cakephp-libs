@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 namespace Ecl\Cache;
 
 use Cake\Cache\Cache;
@@ -18,7 +19,7 @@ class CacheKey
      * Get a SimpleCacheEngine object for the named cache pool.
      *
      * @param  string $config The name of the configured cache backend.
-     * @return \Cake\Cache\SimpleCacheEngine
+     * @return \Psr\SimpleCache\CacheInterface&\Cake\Cache\CacheEngineInterface
      */
     public static function pool($config)
     {
@@ -34,7 +35,7 @@ class CacheKey
      * @param  int $ttl Ttl for this key
      * @param  string $config Cache config
      * @return bool
-     * @throws \Exception
+     * @throws \Psr\SimpleCache\InvalidArgumentException
      */
     public static function write(string $cacheName, string $key, $value, $ttl = 0, string $config = 'default')
     {
@@ -71,6 +72,7 @@ class CacheKey
      * @param  string $key Key in the cache
      * @param  string $config Cache config
      * @return bool
+     * @throws \Psr\SimpleCache\InvalidArgumentException
      */
     public static function read($cacheName, $key, $config = 'default')
     {

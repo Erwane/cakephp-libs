@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 namespace Ecl\I18n;
 
 use Cake\Database\Type;
@@ -15,7 +16,6 @@ use Cake\I18n\Time;
  */
 class IoDateTimeFormat
 {
-
     /**
      * Set input date format in form (datepicker)
      *
