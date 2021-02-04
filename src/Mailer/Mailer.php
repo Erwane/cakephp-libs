@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Ecl\Mailer;
 
 use Cake\Mailer\Mailer as CakeMailer;
+use Cake\Mailer\Renderer as CakeMailerRenderer;
 
 /**
  * Class Mailer
@@ -17,7 +18,7 @@ class Mailer extends CakeMailer
      *
      * @return \Ecl\Mailer\Renderer
      */
-    public function getRenderer(): Renderer
+    public function getRenderer(): CakeMailerRenderer
     {
         if ($this->renderer === null) {
             $this->renderer = new Renderer();
@@ -37,46 +38,5 @@ class Mailer extends CakeMailer
         $this->getRenderer()->setAllowedVars($vars);
 
         return $this;
-    }
-
-    /**
-     * a button with label and url
-     *
-     * @param  string $label button label
-     * @param  string $url button url
-     * @return string
-     */
-    public function button($label, $url): string
-    {
-        $template = <<<BUTTON
-<div class="button-container center"
-    style="padding-right: 10px; padding-left: 10px; padding-top:15px; padding-bottom:10px;">
-    <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"
-    style="border-spacing: 0; border-collapse: collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;">
-    <tr><td style="padding-right: 10px; padding-left: 10px; padding-top:15px; padding-bottom:10px;" align="center">
-    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word"
-    href="{{BTN_URL}}" style="height:42px; v-text-anchor:middle; width:338px;" arcsize="0%"
-    strokecolor="{{BTN_BG}}" fillcolor="{{BTN_BG}}"><w:anchorlock/>
-    <center style="color:{{BTN_TEXT}}; font-family:Arial, \'Helvetica Neue\', Helvetica, sans-serif; font-size:16px;">
-    <![endif]-->
-    <a href="{{BTN_URL}}" target="_blank"
-       style="display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;
-              color: {{BTN_TEXT}}; background-color: {{BTN_BG}};
-              width: 158px; width: 60%; max-width: 338px;
-              font-family: Arial, \'Helvetica Neue\', Helvetica, sans-serif;
-              padding-top: 5px; padding-right: 20px; padding-bottom: 5px; padding-left: 20px;
-              -webkit-border-radius: 0px; -moz-border-radius: 0px;
-              border-radius: 0px; border-top: 0px solid transparent; border-right: 0px solid transparent;
-              border-bottom: 0px solid transparent; border-left: 0px solid transparent; mso-border-alt: none;
-              ">
-        <span style="font-size:16px;line-height:32px;">
-            {{BTN_LABEL}}
-        </span>
-    </a>
-    <!--[if mso]></center></v:roundrect></td></tr></table><![endif]-->
-</div>
-BUTTON;
-
-        return $this->_render($template, ['BTN_LABEL' => $label, 'BTN_URL' => $url]);
     }
 }

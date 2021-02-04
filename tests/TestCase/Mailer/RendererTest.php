@@ -6,6 +6,7 @@ namespace Ecl\Test\TestCase\Mailer;
 use Cake\Chronos\Chronos;
 use Cake\I18n\FrozenTime;
 use Cake\ORM\Entity;
+use DateTime;
 use Ecl\Mailer\Renderer;
 use PHPUnit\Framework\TestCase;
 
@@ -71,7 +72,7 @@ class RendererTest extends TestCase
                 [
                     'subject' => 'Subject',
                     'array' => [
-                        'object' => new \DateTime('now'),
+                        'object' => new DateTime('now'),
                         'array' => [],
                     ],
                     'object' => new Entity([
