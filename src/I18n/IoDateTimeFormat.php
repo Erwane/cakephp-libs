@@ -19,7 +19,7 @@ class IoDateTimeFormat
     /**
      * Set input date format in form (datepicker)
      *
-     * @param string $format Format
+     * @param  string $format Format
      * @return void
      */
     public static function ioDateFormat($format): void
@@ -31,8 +31,8 @@ class IoDateTimeFormat
     /**
      * Set input date time format in form (datepicker)
      *
-     * @param string $dateFormat Date format
-     * @param string $timeFormat Time format
+     * @param  string $dateFormat Date format
+     * @param  string $timeFormat Time format
      * @return void
      */
     public static function ioDateTimeFormat($dateFormat, $timeFormat = null): void

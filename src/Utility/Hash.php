@@ -11,8 +11,8 @@ namespace Ecl\Utility;
 class Hash
 {
     /**
-     * @param array $array Input
-     * @param int $part Wanted partitions
+     * @param  array $array Input
+     * @param  int $part Wanted partitions
      * @return array
      */
     public static function partition($array, $part): array

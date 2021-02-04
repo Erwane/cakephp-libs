@@ -16,7 +16,7 @@ class Text extends CakeText
     /**
      * Count capitals
      *
-     * @param string $string Input
+     * @param  string $string Input
      * @return int
      */
     public static function countCapitals($string): int
@@ -27,7 +27,7 @@ class Text extends CakeText
     /**
      * Count lowers
      *
-     * @param string $string Input
+     * @param  string $string Input
      * @return int
      */
     public static function countLowercases($string): int
@@ -38,7 +38,7 @@ class Text extends CakeText
     /**
      * Count digits
      *
-     * @param string $string Input
+     * @param  string $string Input
      * @return int
      */
     public static function countDigits($string): int
@@ -49,7 +49,7 @@ class Text extends CakeText
     /**
      * Transform urls to links
      *
-     * @param string $text Input
+     * @param  string $text Input
      * @return string
      */
     public static function urlsToLinks($text): string
@@ -109,8 +109,8 @@ class Text extends CakeText
 
         if ($stopWords) {
             // nettoyage des lettres seules
-            $search = ['`^[a-z]\s`', '`\s+[a-z]\s+`', ];
-            $replace = ['', ' ', ];
+            $search = ['`^[a-z]\s`', '`\s+[a-z]\s+`',];
+            $replace = ['', ' ',];
             // remplace 2 fois
             $title = preg_replace($search, $replace, preg_replace($search, $replace, $title));
 

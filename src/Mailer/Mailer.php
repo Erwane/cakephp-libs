@@ -17,6 +17,7 @@ class Mailer extends CakeMailer
      * Get email renderer.
      *
      * @return \Ecl\Mailer\Renderer
+     * @noinspection PhpMissingParentCallCommonInspection
      */
     public function getRenderer(): CakeMailerRenderer
     {
