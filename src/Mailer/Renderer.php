@@ -91,15 +91,11 @@ class Renderer extends CakeMailerRenderer
         foreach ($this->viewBuilder()->getVars() as $prefix => $var) {
             $key = strtoupper($prefix);
 
-            // skipped already setted vars
-            if (isset($vars[$key])) {
-                continue;
-            }
-
-            $ary = [];
             if (is_object($var)) {
                 if (method_exists($var, 'toArray')) {
                     $ary = $var->toArray();
+                } else {
+                    $ary = $this->_getValue($var);
                 }
             } else {
                 $ary = $var;

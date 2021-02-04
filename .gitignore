@@ -1,6 +1,7 @@
 # Project dev tools
 /vendor/
-composer.lock
+/composer.lock
+/.phpunit.result.cache
 
 
 # OS generated files #

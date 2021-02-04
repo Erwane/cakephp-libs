@@ -19,14 +19,19 @@
         "ezyang/htmlpurifier": "^4.13"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.3",
+        "phpunit/phpunit": "^8.5",
         "cakephp/cakephp-codesniffer" : "^4.0",
         "php-parallel-lint/php-parallel-lint": "^1.2",
-        "phpro/grumphp": "^1.3"
+        "phpro/grumphp": "^v0.19"
     },
     "autoload": {
         "psr-4": {
             "Ecl\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ecl\\Test\\": "tests"
         }
     },
     "scripts": {
