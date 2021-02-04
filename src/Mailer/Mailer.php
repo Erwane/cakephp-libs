@@ -13,6 +13,33 @@ use Cake\Mailer\Mailer as CakeMailer;
 class Mailer extends CakeMailer
 {
     /**
+     * Get email renderer.
+     *
+     * @return \Ecl\Mailer\Renderer
+     */
+    public function getRenderer(): Renderer
+    {
+        if ($this->renderer === null) {
+            $this->renderer = new Renderer();
+        }
+
+        return $this->renderer;
+    }
+
+    /**
+     * Set allowed vars in renderer
+     *
+     * @param  array $vars allowed vars keys
+     * @return self
+     */
+    public function setAllowedVars(array $vars): self
+    {
+        $this->getRenderer()->setAllowedVars($vars);
+
+        return $this;
+    }
+
+    /**
      * a button with label and url
      *
      * @param  string $label button label
