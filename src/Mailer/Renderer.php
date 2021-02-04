@@ -109,7 +109,7 @@ class Renderer extends CakeMailerRenderer
                     }
                 }
             } elseif (array_search($key, $this->_allowedVars) !== false) {
-                $vars[$key] = $ary;
+                $vars[$key] = h($ary);
             }
         }
 
@@ -125,10 +125,10 @@ class Renderer extends CakeMailerRenderer
     protected function _getValue($value)
     {
         if ($value instanceof I18nDateTimeInterface) {
-            return $value->i18nFormat();
+            $value = $value->i18nFormat();
         } elseif (is_object($value)) {
             if (method_exists($value, '__toString')) {
-                return (string)$value;
+                $value = (string)$value;
             } else {
                 return null;
             }
@@ -136,6 +136,6 @@ class Renderer extends CakeMailerRenderer
             return null;
         }
 
-        return $value;
+        return h($value);
     }
 }

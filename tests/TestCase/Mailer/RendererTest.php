@@ -59,6 +59,12 @@ class RendererTest extends TestCase
                 ['DATE' => new FrozenTime('now')],
                 ['DATE' => '2021-01-02 15:30:25'],
             ],
+            // Link in array
+            [
+                ['ARY_LINK'],
+                ['ary' => ['link' => 'https://url.com/page.php?q=<tag>']],
+                ['ARY_LINK' => 'https://url.com/page.php?q=&lt;tag&gt;'],
+            ],
             // All cases
             [
                 [
@@ -126,4 +132,38 @@ class RendererTest extends TestCase
 
         self::assertSame('Hello Testing', $output['text']);
     }
+
+    public function dataGetVarsQuote(): array
+    {
+        return [
+            // Simple
+            ['Testing', 'Testing'],
+            // Script/Tag
+            [
+                '<script src="https://unsecure.com/script.js">',
+                '&lt;script src=&quot;https://unsecure.com/script.js&quot;&gt;',
+            ],
+            // Url
+            [
+                'https://url.com/page.php?q=<tag>',
+                'https://url.com/page.php?q=&lt;tag&gt;',
+            ],
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider dataGetVarsQuote
+     * @covers ::render
+     */
+    public function testGetVarsQuote($var, $expected)
+    {
+        $output = $this->renderer
+            ->setAllowedVars(['var'])
+            ->set(['var' => $var])
+            ->getVars();
+
+        self::assertSame(['VAR' => $expected], $output);
+    }
+
 }
