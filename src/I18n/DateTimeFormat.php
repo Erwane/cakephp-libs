@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Ecl\I18n;
 
-use Cake\I18n\DateFormatTrait;
+use Cake\I18n\I18nDateTimeInterface;
 
 /**
  * Class DateTimeFormat
@@ -81,13 +81,13 @@ class DateTimeFormat
     /**
      * format date with app default format/timezone/locale
      *
-     * @param  \Cake\I18n\DateFormatTrait $date Date object
+     * @param  \Cake\I18n\I18nDateTimeInterface $date Date object
      * @param  null|string $format output format
      * @param  null|string $timezone timezone
      * @param  null|string $locale locale
      * @return string                     formated date
      */
-    public static function date(DateFormatTrait $date, $format = null, $timezone = null, $locale = null): string
+    public static function date(I18nDateTimeInterface $date, $format = null, $timezone = null, $locale = null): string
     {
         if (empty($date)) {
             return '';
@@ -111,13 +111,13 @@ class DateTimeFormat
     /**
      * format time with app default format/timezone/locale
      *
-     * @param  \Cake\I18n\DateFormatTrait $time Date object
+     * @param  \Cake\I18n\I18nDateTimeInterface $time Date object
      * @param  null|string $format output format
      * @param  null|string $timezone timezone
      * @param  null|string $locale locale
      * @return string                     formated time
      */
-    public static function time(DateFormatTrait $time, $format = null, $timezone = null, $locale = null): string
+    public static function time(I18nDateTimeInterface $time, $format = null, $timezone = null, $locale = null): string
     {
         if (empty($time)) {
             return '';
