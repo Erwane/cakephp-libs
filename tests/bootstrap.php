@@ -14,8 +14,6 @@ define('ROOT', dirname(__DIR__));
 define('CORE_PATH', ROOT . DS . 'vendor' . DS . 'cakephp' . DS . 'cakephp' . DS);
 define('CAKE', CORE_PATH . 'src' . DS);
 
-require_once CORE_PATH . 'config/bootstrap.php';
-
 date_default_timezone_set('UTC');
 mb_internal_encoding('UTF-8');
 
