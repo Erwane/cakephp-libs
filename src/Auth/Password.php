@@ -85,7 +85,7 @@ class Password
      * @return string
      * @throws \Exception
      */
-    public static function generate(array $options): string
+    public static function generate(array $options = []): string
     {
         $options += [
             'size' => 10,
@@ -115,14 +115,12 @@ class Password
             }
         }
 
-        if (strlen($str) >= $options['size']) {
-            return $str;
-        }
-
-        // complete with lower
-        $lowers = $options['lowers'];
-        for ($i = strlen($str); $i < $options['size']; $i++) {
-            $str .= $lowers[random_int(0, strlen($lowers) - 1)];
+        if (strlen($str) < $options['size']) {
+            // complete with lower
+            $lowers = $options['lowers'];
+            for ($i = strlen($str); $i < $options['size']; $i++) {
+                $str .= $lowers[random_int(0, strlen($lowers) - 1)];
+            }
         }
 
         return str_shuffle($str);
