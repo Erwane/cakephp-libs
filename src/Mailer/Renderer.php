@@ -37,12 +37,18 @@ class Renderer extends CakeMailerRenderer
     /**
      * Set allowed vars
      *
-     * @param  array $vars allowed vars keys
+     * @param array $vars allowed vars keys
+     * @param bool $merge Merge allowed vars
      * @return self
      */
-    public function setAllowedVars(array $vars)
+    public function setAllowedVars(array $vars, bool $merge = true)
     {
-        $this->_allowedVars = array_map('strtoupper', $vars);
+        $vars = array_map('strtoupper', $vars);
+        if ($merge) {
+            $this->_allowedVars = array_merge($this->_allowedVars, $vars);
+        } else {
+            $this->_allowedVars = $vars;
+        }
 
         return $this;
     }

@@ -117,24 +117,4 @@ class PasswordTest extends TestCase
         $success = Password::validateSymbols('!*#+=:,-_?');
         self::assertTrue($success);
     }
-
-    /**
-     * @test
-     */
-    public function testDoc(): void
-    {
-        $password = \Ecl\Auth\Password::generate([
-            'size' => 4,
-            'minimalLower' => 1,
-            'minimalUpper' => 1,
-            'minimalDigit' => 1,
-            'minimalSymbol' => 1,
-            'lowers' => 'a',
-            'uppers' => 'B',
-            'digits' => '3',
-            'symbols' => '#',
-        ]);
-
-        var_dump($password);
-    }
 }

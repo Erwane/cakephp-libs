@@ -30,6 +30,20 @@ class RendererTest extends TestCase
         $this->renderer = new Renderer();
     }
 
+    /**
+     * @test
+     * @covers ::setAllowedVars
+     */
+    public function testSetAllowedVarsMerge(): void
+    {
+        $this->renderer
+            ->setAllowedVars(['a'])
+            ->setAllowedVars(['b'])
+            ->set(['A' => 1, 'B' => 2]);
+
+        self::assertSame(['A' => 1, 'B' => 2], $this->renderer->getVars());
+    }
+
     public function dataGetVars(): array
     {
         return [
