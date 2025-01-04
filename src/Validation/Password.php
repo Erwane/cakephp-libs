@@ -1,16 +1,25 @@
 <?php
 declare(strict_types=1);
 
+/**
+ * CakePHP Erwane libs
+ * Copyright (c) Erwane BRETON
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright   Copyright (c) Erwane BRETON
+ * @see         https://github.com/Erwane/cakephp-libs
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
+ */
 namespace Ecl\Validation;
 
 /**
  * Class Password
- *
- * @package Ecl\Validation
  */
 class Password
 {
-    private static $_default = [
+    private static array $_default = [
         'size' => 10,
         'minimalLowercase' => 2,
         'minimalUppercase' => 2,
@@ -26,8 +35,8 @@ class Password
     /**
      * Minimal lower
      *
-     * @param  string $input Input
-     * @param  int $min Minimal value
+     * @param string $input Input
+     * @param int $min Minimal value
      * @return bool
      */
     public static function minimalLowercase(string $input, int $min): bool
@@ -38,8 +47,8 @@ class Password
     /**
      * Minimal upper
      *
-     * @param  string $input Input
-     * @param  int $min Minimal value
+     * @param string $input Input
+     * @param int $min Minimal value
      * @return bool
      */
     public static function minimalUppercase(string $input, int $min): bool
@@ -50,8 +59,8 @@ class Password
     /**
      * Minimal digit
      *
-     * @param  string $input Input
-     * @param  int $min Minimal value
+     * @param string $input Input
+     * @param int $min Minimal value
      * @return bool
      */
     public static function minimalDigit(string $input, int $min): bool
@@ -62,8 +71,8 @@ class Password
     /**
      * Minimal symbol
      *
-     * @param  string $input Input
-     * @param  int $min Minimal value
+     * @param string $input Input
+     * @param int $min Minimal value
      * @return bool
      */
     public static function minimalSymbol(string $input, int $min): bool
@@ -75,44 +84,47 @@ class Password
     }
 
     /**
-     * Get valids and context with default key
+     * Get valid and context with default key
      *
-     * @param  string $defaultKey $_default key
-     * @param  null|array|string $valids valid list OR context
-     * @param  array|null $context Validation context
+     * @param string $defaultKey $_default key
+     * @param array|string|null $valid valid list OR context
+     * @param array|null $context Validation context
      * @return array
      */
-    private static function _validsAndContext(string $defaultKey, $valids = null, ?array $context = null): array
-    {
-        if (is_array($valids) && $context === null) {
-            $context = $valids;
-            $valids = null;
+    private static function _validAndContext(
+        string $defaultKey,
+        array|string|null $valid = null,
+        ?array $context = null
+    ): array {
+        if (is_array($valid) && $context === null) {
+            $context = $valid;
+            $valid = null;
         }
 
-        if ($valids === null || $valids === '') {
-            $valids = static::$_default[$defaultKey];
+        if ($valid === null || $valid === '') {
+            $valid = static::$_default[$defaultKey];
         }
 
-        return compact(['valids', 'context']);
+        return compact(['valid', 'context']);
     }
 
     /**
      * Only valid lowercase
      *
-     * @param  string $input Input
-     * @param  null|array|string $valids valid list OR context
-     * @param  array|null $context Validation context
+     * @param string $input Input
+     * @param array|string|null $valid valid list OR context
+     * @param array|null $context Validation context
      * @return bool
      */
-    public static function validateLowers(string $input, $valids = null, ?array $context = null)
+    public static function validateLowers(string $input, array|string|null $valid = null, ?array $context = null): bool
     {
-        extract(static::_validsAndContext('lowers', $valids, $context));
+        extract(static::_validAndContext('lowers', $valid, $context));
 
         // remove not lower case
         $input = preg_replace('/\P{Ll}/u', '', $input);
 
-        // remove valids
-        $input = preg_replace('/[' . preg_quote($valids) . ']/', '', $input);
+        // remove valid
+        $input = preg_replace('/[' . preg_quote($valid) . ']/', '', $input);
 
         return strlen($input) === 0;
     }
@@ -120,20 +132,20 @@ class Password
     /**
      * only valid uppercase
      *
-     * @param  string $input Input
-     * @param  null|array|string $valids valid list OR context
-     * @param  array|null $context Validation context
+     * @param string $input Input
+     * @param array|string|null $valid valid list OR context
+     * @param array|null $context Validation context
      * @return bool
      */
-    public static function validateUppers(string $input, $valids = null, ?array $context = null)
+    public static function validateUppers(string $input, array|string|null $valid = null, ?array $context = null): bool
     {
-        extract(static::_validsAndContext('uppers', $valids, $context));
+        extract(static::_validAndContext('uppers', $valid, $context));
 
         // remove not upper case
         $input = preg_replace('/\P{Lu}/u', '', $input);
 
-        // remove valids
-        $input = preg_replace('/[' . preg_quote($valids) . ']/', '', $input);
+        // remove valid
+        $input = preg_replace('/[' . preg_quote($valid) . ']/', '', $input);
 
         return strlen($input) === 0;
     }
@@ -141,20 +153,20 @@ class Password
     /**
      * only valid digits
      *
-     * @param  string $input Input
-     * @param  null|array|string $valids valid list OR context
-     * @param  array|null $context Validation context
+     * @param string $input Input
+     * @param array|string|null $valid valid list OR context
+     * @param array|null $context Validation context
      * @return bool
      */
-    public static function validateDigits(string $input, $valids = null, ?array $context = null): bool
+    public static function validateDigits(string $input, array|string|null $valid = null, ?array $context = null): bool
     {
-        extract(static::_validsAndContext('digits', $valids, $context));
+        extract(static::_validAndContext('digits', $valid, $context));
 
         // remove not digits
         $input = preg_replace('/\P{Nd}/u', '', $input);
 
-        // remove valids
-        $input = preg_replace('/[' . preg_quote($valids) . ']/', '', $input);
+        // remove valid
+        $input = preg_replace('/[' . preg_quote($valid) . ']/', '', $input);
 
         return strlen($input) === 0;
     }
@@ -162,20 +174,23 @@ class Password
     /**
      * only valid symbols
      *
-     * @param  string $input Input
-     * @param  null|array|string $valids valid list OR context
-     * @param  array|null $context Validation context
+     * @param string $input Input
+     * @param array|string|null $valid valid list OR context
+     * @param array|null $context Validation context
      * @return bool
      */
-    public static function validateSymbols(string $input, $valids = null, ?array $context = null): bool
-    {
-        extract(static::_validsAndContext('symbols', $valids, $context));
+    public static function validateSymbols(
+        string $input,
+        array|string|null $valid = null,
+        ?array $context = null
+    ): bool {
+        extract(static::_validAndContext('symbols', $valid, $context));
 
         // remove alpha and digits
         $input = preg_replace('/[\p{L}\p{N}]/u', '', $input);
 
-        // remove valids
-        $input = preg_replace('/[' . preg_quote($valids) . ']/', '', $input);
+        // remove valid
+        $input = preg_replace('/[' . preg_quote($valid) . ']/', '', $input);
 
         return strlen($input) === 0;
     }

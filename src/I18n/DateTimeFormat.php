@@ -1,27 +1,36 @@
 <?php
 declare(strict_types=1);
 
+/**
+ * CakePHP Erwane libs
+ * Copyright (c) Erwane BRETON
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright   Copyright (c) Erwane BRETON
+ * @see         https://github.com/Erwane/cakephp-libs
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
+ */
 namespace Ecl\I18n;
 
-use Cake\I18n\I18nDateTimeInterface;
+use Cake\I18n\DateTime;
 
 /**
  * Class DateTimeFormat
- *
- * @package Ecl\I18n
  */
 class DateTimeFormat
 {
-    protected static $_dateFormat = null;
-    protected static $_timeFormat = null;
-    protected static $_timezone = null;
-    protected static $_locale = null;
+    protected static ?string $_dateFormat = null;
+    protected static ?string $_timeFormat = null;
+    protected static ?string $_timezone = null;
+    protected static ?string $_locale = null;
 
     /**
      * set date & time format in same method
      *
-     * @param  string $date ex 'dd BBB YYYY'
-     * @param  string $time ex 'HH:mm'
+     * @param string $date ex 'dd BBB YYYY'
+     * @param string $time ex 'HH:mm'
      * @return void
      */
     public static function setDateTimeFormat(string $date, string $time): void
@@ -35,7 +44,7 @@ class DateTimeFormat
     /**
      * set Date Format
      *
-     * @param  string $format Date Format
+     * @param string $format Date Format
      * @return void
      */
     public static function setDateFormat(string $format): void
@@ -48,10 +57,10 @@ class DateTimeFormat
     /**
      * set Time Format
      *
-     * @param  string $format Time Format
+     * @param string $format Time Format
      * @return void
      */
-    public static function setTimeFormat($format): void
+    public static function setTimeFormat(string $format): void
     {
         self::$_timeFormat = $format;
     }
@@ -59,10 +68,10 @@ class DateTimeFormat
     /**
      * set timezone
      *
-     * @param  string $timezone Timezone
+     * @param string $timezone Timezone
      * @return void
      */
-    public static function setTimezone($timezone): void
+    public static function setTimezone(string $timezone): void
     {
         self::$_timezone = $timezone;
     }
@@ -70,10 +79,10 @@ class DateTimeFormat
     /**
      * set locale
      *
-     * @param  string $locale Locale
+     * @param string $locale Locale
      * @return void
      */
-    public static function setLocale($locale): void
+    public static function setLocale(string $locale): void
     {
         self::$_locale = $locale;
     }
@@ -81,18 +90,18 @@ class DateTimeFormat
     /**
      * format date with app default format/timezone/locale
      *
-     * @param  \Cake\I18n\I18nDateTimeInterface $date Date object
-     * @param  null|string $format output format
-     * @param  null|string $timezone timezone
-     * @param  null|string $locale locale
+     * @param \Cake\I18n\DateTime $date Date object
+     * @param string|null $format output format
+     * @param string|null $timezone timezone
+     * @param string|null $locale locale
      * @return string                     formated date
      */
-    public static function date(I18nDateTimeInterface $date, $format = null, $timezone = null, $locale = null): string
-    {
-        if (empty($date)) {
-            return '';
-        }
-
+    public static function date(
+        DateTime $date,
+        ?string $format = null,
+        ?string $timezone = null,
+        ?string $locale = null
+    ): string {
         if ($format === null) {
             $format = self::$_dateFormat;
         }
@@ -111,18 +120,18 @@ class DateTimeFormat
     /**
      * format time with app default format/timezone/locale
      *
-     * @param  \Cake\I18n\I18nDateTimeInterface $time Date object
-     * @param  null|string $format output format
-     * @param  null|string $timezone timezone
-     * @param  null|string $locale locale
+     * @param \Cake\I18n\DateTime $time Date object
+     * @param string|null $format output format
+     * @param string|null $timezone timezone
+     * @param string|null $locale locale
      * @return string                     formated time
      */
-    public static function time(I18nDateTimeInterface $time, $format = null, $timezone = null, $locale = null): string
-    {
-        if (empty($time)) {
-            return '';
-        }
-
+    public static function time(
+        DateTime $time,
+        ?string $format = null,
+        ?string $timezone = null,
+        ?string $locale = null
+    ): string {
         if ($format === null) {
             $format = self::$_dateFormat . ' ' . self::$_timeFormat;
         }

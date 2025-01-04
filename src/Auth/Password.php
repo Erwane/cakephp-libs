@@ -1,24 +1,34 @@
 <?php
 declare(strict_types=1);
 
+/**
+ * CakePHP Erwane libs
+ * Copyright (c) Erwane BRETON
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright   Copyright (c) Erwane BRETON
+ * @see         https://github.com/Erwane/cakephp-libs
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
+ */
 namespace Ecl\Auth;
 
 use Ecl\Utility\Text;
 
 /**
  * Class Password
- *
- * @package Ecl\Auth
  */
 class Password
 {
     /**
-     * hash a password with CRYPT_SHA512
+     * Hash a password with CRYPT_SHA512
      *
-     * @param  string $password plai password
-     * @return string encrypted password
+     * @param string $password Clear password
+     * @return string
      */
-    public static function hash($password)
+    public static function hash(string $password): string
     {
         return crypt($password, '$6$' . self::_salt() . '$');
     }
@@ -59,10 +69,10 @@ class Password
     /**
      * Generate simple password
      *
-     * @param  int $length Password length
+     * @param int $length Password length
      * @return string
      */
-    public static function simplePassword($length = 16): string
+    public static function simplePassword(int $length = 16): string
     {
         return self::password('simple', $length);
     }
@@ -70,10 +80,10 @@ class Password
     /**
      * Generate medium password
      *
-     * @param  int $length Password length
+     * @param int $length Password length
      * @return string
      */
-    public static function mediumPassword($length = 10): string
+    public static function mediumPassword(int $length = 10): string
     {
         return self::passwordWithMinimals('medium', $length);
     }
@@ -81,7 +91,7 @@ class Password
     /**
      * Generate password
      *
-     * @param  array $options Password options
+     * @param array $options Password options
      * @return string
      * @throws \Exception
      */
@@ -129,11 +139,11 @@ class Password
     /**
      * Generate password with minimals chars
      *
-     * @param  string $type Password type
-     * @param  int $length Length
+     * @param string $type Password type
+     * @param int $length Length
      * @return string
      */
-    public static function passwordWithMinimals($type = 'medium', $length = 10): string
+    public static function passwordWithMinimals(string $type = 'medium', int $length = 10): string
     {
         $check = false;
         $pass = 0;
@@ -157,11 +167,11 @@ class Password
     /**
      * Generate password for type (simple, medium, high)
      *
-     * @param  string $type Password type
-     * @param  int $length Password length
+     * @param string $type Password type
+     * @param int $length Password length
      * @return string
      */
-    public static function password($type = 'medium', $length = 10): string
+    public static function password(string $type = 'medium', int $length = 10): string
     {
         $chars = [
             'min' => 'abcdefghijkmnopqrstuvwxyz',

@@ -1,23 +1,33 @@
 <?php
 declare(strict_types=1);
 
+/**
+ * CakePHP Erwane libs
+ * Copyright (c) Erwane BRETON
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright   Copyright (c) Erwane BRETON
+ * @see         https://github.com/Erwane/cakephp-libs
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
+ */
 namespace Ecl\Mailer;
 
-use Cake\I18n\I18nDateTimeInterface;
+use Cake\I18n\DateTime;
 use Cake\Mailer\Renderer as CakeMailerRenderer;
 use Cake\View\StringTemplate;
 use Cake\View\StringTemplateTrait;
 
 /**
  * Class Renderer
- *
- * @package Ecl\Mailer
  */
 class Renderer extends CakeMailerRenderer
 {
     use StringTemplateTrait;
 
-    protected $_defaultVars = [
+    protected array $_defaultVars = [
         'layout_bg' => '#f8f9fa',
         'head_bg' => '#68503d',
         'head_text' => '#ffffff',
@@ -32,7 +42,7 @@ class Renderer extends CakeMailerRenderer
         'email_date' => null,
     ];
 
-    protected $_allowedVars = [];
+    protected array $_allowedVars = [];
 
     /**
      * Set allowed vars
@@ -41,7 +51,7 @@ class Renderer extends CakeMailerRenderer
      * @param bool $merge Merge allowed vars
      * @return self
      */
-    public function setAllowedVars(array $vars, bool $merge = true)
+    public function setAllowedVars(array $vars, bool $merge = true): self
     {
         $vars = array_map('strtoupper', $vars);
         if ($merge) {
@@ -57,8 +67,8 @@ class Renderer extends CakeMailerRenderer
      * Render original content and
      * search/replace allowed vars in it
      *
-     * @param  string $content Message content
-     * @param  array $types Email types
+     * @param string $content Message content
+     * @param array $types Email types
      * @return array
      */
     public function render(string $content, array $types = []): array
@@ -110,11 +120,11 @@ class Renderer extends CakeMailerRenderer
             if (is_array($ary)) {
                 foreach ($ary as $name => $value) {
                     $key = strtoupper($prefix) . '_' . strtoupper($name);
-                    if (array_search($key, $this->_allowedVars) !== false) {
+                    if (in_array($key, $this->_allowedVars)) {
                         $vars[$key] = $this->_getValue($value);
                     }
                 }
-            } elseif (array_search($key, $this->_allowedVars) !== false) {
+            } elseif (in_array($key, $this->_allowedVars)) {
                 $vars[$key] = h($ary);
             }
         }
@@ -123,14 +133,14 @@ class Renderer extends CakeMailerRenderer
     }
 
     /**
-     * Get printable value of stringable object or I18nDateTimeInterface.
+     * Get printable value of string object or I18nDateTimeInterface.
      *
-     * @param  mixed $value Object with __toString, I18nDateTimeInterface or anything else
+     * @param mixed $value Object with __toString, I18nDateTimeInterface or anything else
      * @return mixed Printable value or null
      */
-    protected function _getValue($value)
+    protected function _getValue(mixed $value): mixed
     {
-        if ($value instanceof I18nDateTimeInterface) {
+        if ($value instanceof DateTime) {
             $value = $value->i18nFormat();
         } elseif (is_object($value)) {
             if (method_exists($value, '__toString')) {
