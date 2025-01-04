@@ -137,6 +137,7 @@ class RendererTest extends TestCase
 
     public static function dataGetVarsQuote(): array
     {
+        /** @noinspection JSUnresolvedLibraryURL */
         return [
             // Simple
             ['Testing', 'Testing'],
