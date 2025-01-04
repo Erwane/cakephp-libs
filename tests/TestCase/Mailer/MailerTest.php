@@ -5,20 +5,21 @@ namespace Ecl\Test\TestCase\Mailer;
 
 use Ecl\Mailer\Mailer;
 use Ecl\Mailer\Renderer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class MailerTest
- *
- * @package Ecl\Test\TestCase\Mailer
- * @coversDefaultClass \Ecl\Mailer\Mailer
+ * Mailer tests
  */
+#[UsesClass(Renderer::class)]
+#[CoversClass(Renderer::class)]
 class MailerTest extends TestCase
 {
     /**
      * @var \Ecl\Mailer\Mailer
      */
-    private $mailer;
+    private Mailer $mailer;
 
     protected function setUp(): void
     {
@@ -27,10 +28,6 @@ class MailerTest extends TestCase
         $this->mailer = new Mailer();
     }
 
-    /**
-     * @test
-     * @covers ::getRenderer
-     */
     public function testGetRenderer()
     {
         $renderer = $this->mailer->getRenderer();
@@ -38,10 +35,6 @@ class MailerTest extends TestCase
         self::assertInstanceOf(Renderer::class, $renderer);
     }
 
-    /**
-     * @test
-     * @covers ::setAllowedVars
-     */
     public function testSetAllowedVars()
     {
         $vars = $this->mailer->setAllowedVars(['name'])
