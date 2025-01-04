@@ -3,7 +3,7 @@ name: CI
 on:
   push:
     branches:
-      - '3.x'
+      - '2.x'
   pull_request:
     branches:
       - '*'
@@ -18,7 +18,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: ['8.1', '8.3']
+        php-version: ['7.4', '8.0', '8.1']
 
     steps:
     - uses: actions/checkout@v4
@@ -41,15 +41,15 @@ jobs:
       env:
         XDEBUG_MODE: coverage
       run: |
-        if [[ '${{ matrix.php-version }}' == '8.1' ]]; then
+        if [[ '${{ matrix.php-version }}' == '7.4' ]]; then
           export CODECOVERAGE=1
-          vendor/bin/phpunit --display-warnings --display-incomplete --coverage-clover=coverage.xml
+          vendor/bin/phpunit --coverage-clover=coverage.xml
         else
-          vendor/bin/phpunit --display-phpunit-deprecations --display-deprecations --display-warnings
+          vendor/bin/phpunit
         fi
 
     - name: Submit code coverage
-      if: matrix.php-version == '8.1'
+      if: matrix.php-version == '7.4'
       uses: codecov/codecov-action@v5
       with:
         files: coverage.xml
