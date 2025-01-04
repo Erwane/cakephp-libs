@@ -8,20 +8,22 @@ use Cake\I18n\FrozenTime;
 use Cake\ORM\Entity;
 use DateTime;
 use Ecl\Mailer\Renderer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class RendererTest
- *
- * @package Ecl\Test\TestCase\Mailer
- * @coversDefaultClass \Ecl\Mailer\Renderer
+ * Mailer\Renderer tests
  */
+#[UsesClass(Renderer::class)]
+#[CoversClass(Renderer::class)]
 class RendererTest extends TestCase
 {
     /**
      * @var \Ecl\Mailer\Renderer
      */
-    private $renderer;
+    private Renderer $renderer;
 
     protected function setUp(): void
     {
@@ -30,10 +32,6 @@ class RendererTest extends TestCase
         $this->renderer = new Renderer();
     }
 
-    /**
-     * @test
-     * @covers ::setAllowedVars
-     */
     public function testSetAllowedVarsMerge(): void
     {
         $this->renderer
@@ -44,7 +42,7 @@ class RendererTest extends TestCase
         self::assertSame(['A' => 1, 'B' => 2], $this->renderer->getVars());
     }
 
-    public function dataGetVars(): array
+    public static function dataGetVars(): array
     {
         return [
             // No data
@@ -114,13 +112,7 @@ class RendererTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     * @covers ::setAllowedVars
-     * @covers ::getVars
-     * @covers ::_getValue
-     * @dataProvider dataGetVars
-     */
+    #[DataProvider('dataGetVars')]
     public function testGetVars($allowed, $input, $expected)
     {
         $vars = $this->renderer
@@ -131,10 +123,6 @@ class RendererTest extends TestCase
         self::assertSame($expected, $vars);
     }
 
-    /**
-     * @test
-     * @covers ::render
-     */
     public function testRender()
     {
         $content = 'Hello {{USER_NAME}}';
@@ -147,15 +135,16 @@ class RendererTest extends TestCase
         self::assertSame('Hello Testing', $output['text']);
     }
 
-    public function dataGetVarsQuote(): array
+    public static function dataGetVarsQuote(): array
     {
+        /** @noinspection JSUnresolvedLibraryURL */
         return [
             // Simple
             ['Testing', 'Testing'],
             // Script/Tag
             [
-                '<script src="https://unsecure.com/script.js">',
-                '&lt;script src=&quot;https://unsecure.com/script.js&quot;&gt;',
+                '<script src="https://insecure.com/script.js">',
+                '&lt;script src=&quot;https://insecure.com/script.js&quot;&gt;',
             ],
             // Url
             [
@@ -165,11 +154,7 @@ class RendererTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider dataGetVarsQuote
-     * @covers ::render
-     */
+    #[DataProvider('dataGetVarsQuote')]
     public function testGetVarsQuote($var, $expected)
     {
         $output = $this->renderer
@@ -179,5 +164,4 @@ class RendererTest extends TestCase
 
         self::assertSame(['VAR' => $expected], $output);
     }
-
 }

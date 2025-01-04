@@ -1,22 +1,22 @@
 <?php
 declare(strict_types=1);
 
+use Cake\Chronos\Chronos;
 use Cake\Core\Configure;
-use Cake\I18n\FrozenTime;
+use Cake\I18n\DateTime;
+use Cake\Utility\Security;
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 
-// Path constants to a few helpful things.
-if (!defined('DS')) {
-    define('DS', DIRECTORY_SEPARATOR);
-}
-define('ROOT', dirname(__DIR__));
-define('CORE_PATH', ROOT . DS . 'vendor' . DS . 'cakephp' . DS . 'cakephp' . DS);
-define('CAKE', CORE_PATH . 'src' . DS);
+define('ROOT', dirname(__DIR__) . DS);
+define('TMP', sys_get_temp_dir() . DS);
+const CORE_PATH = ROOT . 'vendor' . DS . 'cakephp' . DS . 'cakephp' . DS;
+const CAKE = CORE_PATH . 'src' . DS;
 
-date_default_timezone_set('UTC');
-mb_internal_encoding('UTF-8');
+require CAKE . 'Core/functions_global.php';
 
 Configure::write('debug', true);
-FrozenTime::setTestNow('2021-01-02 15:30:25');
-FrozenTime::setToStringFormat('y-MM-dd HH:mm:ss');
+Configure::write('App.encoding', 'UTF-8');
+Security::setSalt('a-long-but-not-random-value');
+Chronos::setTestNow('2021-01-02 15:30:25');
+DateTime::setToStringFormat('y-MM-dd HH:mm:ss');

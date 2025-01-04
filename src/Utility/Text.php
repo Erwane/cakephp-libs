@@ -1,6 +1,18 @@
 <?php
 declare(strict_types=1);
 
+/**
+ * CakePHP Erwane libs
+ * Copyright (c) Erwane BRETON
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright   Copyright (c) Erwane BRETON
+ * @see         https://github.com/Erwane/cakephp-libs
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
+ */
 namespace Ecl\Utility;
 
 use Cake\Core\Configure;
@@ -8,18 +20,16 @@ use Cake\Utility\Text as CakeText;
 
 /**
  * Class Text
- *
- * @package Ecl\Utility
  */
 class Text extends CakeText
 {
     /**
      * Count capitals
      *
-     * @param  string $string Input
+     * @param string $string Input
      * @return int
      */
-    public static function countCapitals($string): int
+    public static function countCapitals(string $string): int
     {
         return strlen(preg_replace('/[^A-Z]/', '', $string));
     }
@@ -27,10 +37,10 @@ class Text extends CakeText
     /**
      * Count lowers
      *
-     * @param  string $string Input
+     * @param string $string Input
      * @return int
      */
-    public static function countLowercases($string): int
+    public static function countLowercases(string $string): int
     {
         return strlen(preg_replace('/[^a-z]/', '', $string));
     }
@@ -38,10 +48,10 @@ class Text extends CakeText
     /**
      * Count digits
      *
-     * @param  string $string Input
+     * @param string $string Input
      * @return int
      */
-    public static function countDigits($string): int
+    public static function countDigits(string $string): int
     {
         return strlen(preg_replace('/[^0-9]/', '', $string));
     }
@@ -49,10 +59,10 @@ class Text extends CakeText
     /**
      * Transform urls to links
      *
-     * @param  string $text Input
+     * @param string $text Input
      * @return string
      */
-    public static function urlsToLinks($text): string
+    public static function urlsToLinks(string $text): string
     {
         preg_match_all('`(http(s)?://([a-z0-9\._%&=/#\?-]+))`i', $text, $grep);
         if (!empty($grep[1])) {
@@ -73,10 +83,10 @@ class Text extends CakeText
     /**
      * Convert BR tags to nl
      *
-     * @param  string $string The string to convert
+     * @param string $string The string to convert
      * @return string The converted string
      */
-    public static function br2nl($string): string
+    public static function br2nl(string $string): string
     {
         return preg_replace('/\<br(\s*)?\/?\>/i', "\n", $string);
     }
@@ -84,13 +94,13 @@ class Text extends CakeText
     /**
      * slugify an url title correctly
      *
-     * @param  string $title text for url
-     * @param  array $params options
+     * @param string $title text for url
+     * @param array $params options
      *  - `stopWords`   if true, remove common short words
      *  - `cut`         if not empty, cut the slug for `cut` value words
      * @return string
      */
-    public static function urlSlug($title, $params = []): string
+    public static function urlSlug(string $title, array $params = []): string
     {
         $params = array_merge(['stopWords' => true, 'cut' => 0], $params);
 

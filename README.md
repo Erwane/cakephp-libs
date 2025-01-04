@@ -1,4 +1,18 @@
-# cakephp-libs
+# Some tools for CakePHP projects
+
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.txt)
+[![codecov](https://codecov.io/gh/Erwane/cakephp-libs/branch/3.x/graph/badge.svg?token=vlJOavHwCO)](https://codecov.io/gh/Erwane/cakephp-libs)
+[![Build Status](https://github.com/Erwane/cakephp-libs/actions/workflows/ci.yml/badge.svg?branch=3.x)](https://github.com/Erwane/cakephp-libs/actions)
+[![Packagist Downloads](https://img.shields.io/packagist/dt/Erwane/cakephp-libs)](https://packagist.org/packages/Erwane/cakephp-libs)
+[![Packagist Version](https://img.shields.io/packagist/v/Erwane/cakephp-libs)](https://packagist.org/packages/Erwane/cakephp-libs)
+
+## Version map
+
+| branch | CakePHP core | PHP min |
+|--------|--------------|---------|
+| 1.x    | ^3.0         | PHP 7.2 |
+| 2.x    | ^4.0         | PHP 7.4 |
+| 3.x    | ^5.0         | PHP 8.1 |
 
 ## Mailer
 

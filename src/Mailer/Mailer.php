@@ -1,6 +1,18 @@
 <?php
 declare(strict_types=1);
 
+/**
+ * CakePHP Erwane libs
+ * Copyright (c) Erwane BRETON
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright   Copyright (c) Erwane BRETON
+ * @see         https://github.com/Erwane/cakephp-libs
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
+ */
 namespace Ecl\Mailer;
 
 use Cake\Mailer\Mailer as CakeMailer;
@@ -8,8 +20,6 @@ use Cake\Mailer\Renderer as CakeMailerRenderer;
 
 /**
  * Class Mailer
- *
- * @package Ecl\Mailer
  */
 class Mailer extends CakeMailer
 {
@@ -31,7 +41,7 @@ class Mailer extends CakeMailer
     /**
      * Set allowed vars in renderer
      *
-     * @param  array $vars allowed vars keys
+     * @param array $vars allowed vars keys
      * @return self
      */
     public function setAllowedVars(array $vars): self

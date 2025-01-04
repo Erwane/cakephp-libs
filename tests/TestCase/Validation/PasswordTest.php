@@ -5,20 +5,16 @@ namespace Ecl\Test\TestCase\Validation;
 
 use Cake\TestSuite\TestCase;
 use Ecl\Validation\Password;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 
 /**
- * Class PasswordTest
- *
- * @package Ecl\Test\TestCase\Validation
- * @coversDefaultClass \Ecl\Validation\Password
+ * Password tests
  */
+#[UsesClass(Password::class)]
+#[CoversClass(Password::class)]
 class PasswordTest extends TestCase
 {
-    /**
-     * @test
-     * @uses \Ecl\Validation\Password::minimalLowercase()
-     * @covers ::minimalLowercase
-     */
     public function testMinimalLowercase()
     {
         $success = Password::minimalLowercase('AbC;eF', 3);
@@ -27,11 +23,6 @@ class PasswordTest extends TestCase
         self::assertTrue($success);
     }
 
-    /**
-     * @test
-     * @uses \Ecl\Validation\Password::minimalUppercase()
-     * @covers ::minimalUppercase
-     */
     public function testMinimalUppercase()
     {
         $success = Password::minimalUppercase('abC;eF', 3);
@@ -40,11 +31,6 @@ class PasswordTest extends TestCase
         self::assertTrue($success);
     }
 
-    /**
-     * @test
-     * @uses \Ecl\Validation\Password::minimalDigit()
-     * @covers ::minimalDigit
-     */
     public function testMinimalDigit()
     {
         $success = Password::minimalDigit('ab1;2ce', 3);
@@ -53,11 +39,6 @@ class PasswordTest extends TestCase
         self::assertTrue($success);
     }
 
-    /**
-     * @test
-     * @uses \Ecl\Validation\Password::minimalSymbol()
-     * @covers ::minimalSymbol
-     */
     public function testMinimalSymbol()
     {
         $success = Password::minimalSymbol('ab!1;2ce', 3);
@@ -66,11 +47,6 @@ class PasswordTest extends TestCase
         self::assertTrue($success);
     }
 
-    /**
-     * @test
-     * @uses \Ecl\Validation\Password::validateLowers()
-     * @covers ::validateLowers
-     */
     public function testValidateLowers()
     {
         $success = Password::validateLowers('abc', 'abd');
@@ -79,11 +55,6 @@ class PasswordTest extends TestCase
         self::assertTrue($success);
     }
 
-    /**
-     * @test
-     * @uses \Ecl\Validation\Password::validateUppers()
-     * @covers ::validateUppers
-     */
     public function testValidateUppers()
     {
         $success = Password::validateUppers('ABC', 'ABD');
@@ -92,11 +63,6 @@ class PasswordTest extends TestCase
         self::assertTrue($success);
     }
 
-    /**
-     * @test
-     * @uses \Ecl\Validation\Password::validateDigits()
-     * @covers ::validateDigits
-     */
     public function testValidateDigits()
     {
         $success = Password::validateDigits('123', '124');
@@ -105,11 +71,6 @@ class PasswordTest extends TestCase
         self::assertTrue($success);
     }
 
-    /**
-     * @test
-     * @uses \Ecl\Validation\Password::validateSymbols()
-     * @covers ::validateSymbols
-     */
     public function testValidateSymbols()
     {
         $success = Password::validateSymbols('%!:*', '!:%');
