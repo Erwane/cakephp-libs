@@ -8,7 +8,7 @@ use Cake\Auth\AbstractPasswordHasher;
 /**
  * Class StrongPasswordHasher
  *
- * @package Ecl\Auth
+ * @deprecated Removed in 3.x. Use Cake\Authentication DefaultPasswordHasher.
  */
 class StrongPasswordHasher extends AbstractPasswordHasher
 {
@@ -21,6 +21,8 @@ class StrongPasswordHasher extends AbstractPasswordHasher
      */
     public function hash($password)
     {
+        deprecationWarning('Removed in 3.x. Use Cake\Authentication DefaultPasswordHasher.');
+
         return Password::hash($password);
     }
 
